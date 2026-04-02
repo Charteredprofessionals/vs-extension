@@ -2,178 +2,130 @@
 
 > Enterprise SDLC Operating System - Terminal Interface
 
-The CLI brings the full power of AI Dev Suite to your terminal.
+Full-featured CLI with Git integration, MCP support, and complete SDLC workflow.
 
 ## Installation
 
-### From Source
-
 ```bash
-# Clone the repo
 git clone https://github.com/Charteredprofessionals/vs-extension.git
 cd vs-extension/cli
-
-# Install dependencies
 npm install
-
-# Build
 npm run build
-
-# Link globally (optional)
-npm link
-```
-
-### From npm (if published)
-
-```bash
-npm install -g ai-dev-suite
+npm link  # Enable 'ai-dev-suite' globally
 ```
 
 ## Quick Start
 
 ```bash
-# Initialize a new project
-ai-dev-suite init my-project
-
-# Start a new project with viability analysis
-ai-dev-suite new "Build a task management app with real-time collaboration"
-
-# Enter development mode
+ai-dev-suite new "Build a task management app"
 ai-dev-suite develop
-
-# Create a feature
-ai-dev-suite create "Add user authentication with JWT"
-
-# Review code
-ai-dev-suite review src/auth.ts
-
-# Run tests
-ai-dev-suite test
-
-# Deploy
-ai-dev-suite deploy
+ai-dev-suite create "Add user authentication"
 ```
 
-## Commands
+## Git Commands
 
-| Command | Description |
-|---------|-------------|
-| `init [name]` | Initialize a new project |
-| `new <idea>` | Start new project with viability analysis |
-| `develop` | Enter development mode |
-| `create <spec>` | Create a new feature |
-| `review <file>` | Review code |
-| `test` | Run tests |
-| `status` | Show project status |
-| `harden` | Run security & performance audits |
-| `deploy` | Deploy to production |
-| `ops` | Post-launch operations |
-| `chat [agent]` | Chat with Architect/Developer/Designer |
-| `config` | Manage configuration |
+Full Git integration with commits, branches, PRs:
 
-## Configuration
+```bash
+# Status
+ai-dev-suite git status
+ai-dev-suite git st
 
-Create `ai-dev-suite.config.json` in your project root:
+# Commits
+ai-dev-suite git commit -m "feat: add auth"
+ai-dev-suite git commit -a -m "chore: update deps"
+
+# Branches
+ai-dev-suite git branch create feature/auth
+ai-dev-suite git branch delete feature/old-branch
+ai-dev-suite git checkout feature/auth
+
+# Pull Requests
+ai-dev-suite git pr create -t "Add authentication"
+ai-dev-suite git pr list
+ai-dev-suite git pr merge 42
+
+# Other
+ai-dev-suite git log -n 20
+ai-dev-suite git diff
+ai-dev-suite git push
+ai-dev-suite git pull
+ai-dev-suite git fetch
+ai-dev-suite git stash push -m "WIP"
+ai-dev-suite git stash pop
+ai-dev-suite git merge feature/auth
+```
+
+## MCP Support (Open-Source)
+
+Built-in support for free, open-source MCP servers:
+
+| Server | Description | Command |
+|--------|-------------|---------|
+| filesystem | File operations | `npx @modelcontextprotocol/server-filesystem` |
+| git | Git operations | `npx @modelcontextprotocol/server-git` |
+| github | GitHub API | `npx @modelcontextprotocol/server-github` |
+| fetch | Web content | `uvx mcp-server-fetch` |
+| sqlite | Database | `npx @modelcontextprotocol/server-sqlite` |
+| postgres | Database | `npx @modelcontextprotocol/server-postgres` |
+| sequential-thinking | Advanced reasoning | `npx @mcp/sequential-thinking` |
+| puppeteer | Browser automation | `npx @modelcontextprotocol/server-puppeteer` |
+
+Enable MCP servers in `ai-dev-suite.config.json`:
 
 ```json
 {
-  "providers": {
-    "openrouter": {
-      "enabled": true,
-      "apiKey": "your-api-key"
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
     },
-    "ollama": {
-      "enabled": true,
-      "endpoint": "http://localhost:11434"
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git"]
     }
-  },
-  "agents": {
-    "architect": { "model": "claude-3.5-sonnet" },
-    "developer": { "model": "deepseek-coder-v2" },
-    "designer": { "model": "gemini-pro-1.5-flash" }
   }
 }
 ```
 
-## Examples
-
-### Viability Analysis
+## SDLC Commands
 
 ```bash
-$ ai-dev-suite new "Build a healthcare app for elderly patients"
-
-🔍 Running Viability Analysis...
-
-# VIABILITY GATE ANALYSIS
-## Recommendation: GO
-## Score: 82/100
-
-### Executive Summary
-The idea shows strong market potential with clear differentiation...
-
-[Full analysis...]
-
-? Viability Decision: GO - Proceed to Charter
+ai-dev-suite init [name]        # Initialize project
+ai-dev-suite new <idea>          # Viability analysis
+ai-dev-suite develop             # Development mode
+ai-dev-suite create <spec>       # Create feature
+ai-dev-suite review <file>       # Code review
+ai-dev-suite test                # Run tests
+ai-dev-suite harden              # Security + performance
+ai-dev-suite deploy              # Deploy
+ai-dev-suite ops                 # Post-launch
+ai-dev-suite chat [agent]        # Chat with agents
+ai-dev-suite config              # Configuration
+ai-dev-suite mcp                 # MCP management
 ```
 
-### Feature Creation
+## Workflow Example
 
 ```bash
-$ ai-dev-suite create "Add user authentication with JWT"
+# Start new project
+ai-dev-suite new "Build a healthcare app for patients"
 
-🔨 Creating feature...
+# Work with Git
+ai-dev-suite git branch create feature/patient-portal
+ai-dev-suite develop
+ai-dev-suite create "Add patient registration form"
 
-✅ Feature created!
+# Review and commit
+ai-dev-suite review src/patient-form.tsx
+ai-dev-suite git commit -m "feat: add patient registration"
+ai-dev-suite git push
 
-// auth.ts
-import jwt from 'jsonwebtoken';
+# Create PR
+ai-dev-suite git pr create -t "Patient Portal" -d
 
-export function authenticate(req: Request, res: Response, next: Function) {
-  const token = req.headers.authorization?.split(' ')[1];
-  // ...
-}
+# Deploy when ready
+ai-dev-suite harden
+ai-dev-suite deploy
+ai-dev-suite ops
 ```
-
-### Chat with Agents
-
-```bash
-$ ai-dev-suite chat architect
-
-💬 Chatting with architect...
-
-You: What's the best architecture for a real-time app?
-
-Architect: For real-time applications, I recommend considering:
-- WebSocket for bidirectional communication
-- Event-driven architecture
-- Consider Redis for pub/sub
-- Load balancing strategy
-
-[Would you like me to elaborate on any of these?]
-```
-
-## Workflow
-
-```
-ai-dev-suite new        → Viability Gate (Phase 0)
-       ↓
-ai-dev-suite generate  → Project Charter (Phase 1)
-       ↓
-ai-dev-suite develop   → Development (Phase 2)
-       ↓
-ai-dev-suite harden    → Hardening (Phase 3)
-       ↓
-ai-dev-suite deploy    → Launch (Phase 4)
-       ↓
-ai-dev-suite ops       → Post-Launch (Phase 5)
-```
-
-## Requirements
-
-- Node.js 18+
-- npm or yarn
-- LLM provider (OpenRouter, Ollama, Anthropic, OpenAI, or Google)
-
----
-
-For full documentation, see [README.md](../README.md)
