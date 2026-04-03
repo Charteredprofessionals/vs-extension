@@ -3,9 +3,9 @@
  * Complete lifecycle: Idea → Viability → Charter → Execute → Hardening → Launch → Operations
  */
 
-import { ArchitectAgent, ViabilityAssessment, ArchitectureDesign } from './agents/architect';
-import { DeveloperAgent, ImplementationTask, CodeReview } from './agents/developer';
-import { DesignerAgent, DesignSpec, DesignReview } from './agents/designer';
+import { ArchitectAgent, ViabilityAssessment, ArchitectureDesign } from './architect';
+import { DeveloperAgent, ImplementationTask, CodeReview } from './developer';
+import { DesignerAgent, DesignSpec, DesignReview } from './designer';
 import { LLMRouter } from '../llm/router';
 
 export type SDLCPhase = 
@@ -111,7 +111,7 @@ export interface UserStory {
   asA: string;
   iWant: string;
   soThat: string;
-  priority: 'must-have' | 'should-have' | 'could-have' | 'won't-have';
+  priority: 'must-have' | 'should-have' | 'could-have' | 'won-t-have';
   estimate: string;
 }
 
@@ -648,7 +648,7 @@ ${this.currentProject.blockers.length ? this.currentProject.blockers.map(b => `-
    * Final code review
    */
   async finalCodeReview(): Promise<CodeReview> {
-    return { file: 'final', issues: [], suggestions: [], overallQuality: 'excellent', summary: 'Ready for deployment' };
+    return { id: "final", file: 'final', issues: [], suggestions: [], overallQuality: 'excellent', summary: 'Ready for deployment' };
   }
 
   // ========================================

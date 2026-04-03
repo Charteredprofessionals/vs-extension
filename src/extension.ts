@@ -360,7 +360,7 @@ async function addTests() {
   const editor = vscode.window.activeTextEditor;
   if (!editor) return;
   
-  const code = editor.document.getText(editor.document.uri);
+  const code = editor.document.getText();
   
   vscode.window.showInformationMessage('🧪 Generating tests... (demo mode)');
   // Would call developer.generateTests in production

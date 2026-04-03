@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "publisher": "aidevsuite",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "^1.100.0"
   },
   "categories": [
     "Programming Languages",
@@ -32,7 +32,11 @@
     "onLanguage:go",
     "onCommand:aiDevSuite.start"
   ],
-  "main": "./src/extension",
+  "main": "./out/extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Charteredprofessionals/vs-extension"
+  },
   "contributes": {
     "commands": [
       {
@@ -132,7 +136,12 @@
         "aiDevSuite.routing.strategy": {
           "type": "string",
           "default": "auto",
-          "enum": ["auto", "cost-optimized", "performance", "custom"],
+          "enum": [
+            "auto",
+            "cost-optimized",
+            "performance",
+            "custom"
+          ],
           "description": "LLM routing strategy"
         },
         "aiDevSuite.routing.fallbackEnabled": {
@@ -158,13 +167,20 @@
         "aiDevSuite.ui.theme": {
           "type": "string",
           "default": "dark",
-          "enum": ["dark", "light", "system"],
+          "enum": [
+            "dark",
+            "light",
+            "system"
+          ],
           "description": "UI theme"
         },
         "aiDevSuite.ui.panelPosition": {
           "type": "string",
           "default": "right",
-          "enum": ["right", "bottom"],
+          "enum": [
+            "right",
+            "bottom"
+          ],
           "description": "Chat panel position"
         }
       }
@@ -219,17 +235,17 @@
     "package": "vsce package"
   },
   "devDependencies": {
+    "@types/axios": "^0.9.36",
     "@types/node": "^20.10.0",
-    "@types/vscode": "^1.85.0",
     "@types/uuid": "^9.0.7",
-    "typescript": "^5.3.3",
-    "vsce": "^2.15.0",
-    "eslint": "^8.56.0",
+    "@types/vscode": "^1.100.0",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0"
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "vsce": "^2.15.0"
   },
   "dependencies": {
-    "uuid": "^9.0.1",
-    "vscode": "^1.85.0"
+    "uuid": "^9.0.1"
   }
 }

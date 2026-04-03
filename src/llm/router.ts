@@ -3,7 +3,7 @@
  * Handles multiple LLM providers: OpenRouter, Ollama, Agent Router, and more
  */
 
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 
 export type LLMProvider = 
   | 'openrouter' 
@@ -137,7 +137,7 @@ const MODEL_REGISTRY: Record<string, ProviderCapabilities> = {
 };
 
 export class LLMRouter {
-  private providers: Map<LLMProvider, AxiosInstance> = new Map();
+  private providers: Map<LLMProvider, any> = new Map();
   private config: Record<string, any> = {};
   private fallbackChain: LLMProvider[] = [];
   private maxRetries: number = 3;
@@ -149,11 +149,11 @@ export class LLMRouter {
 
   private initializeProviders(): void {
     // OpenRouter
-    if (config.openrouter?.enabled && config.openrouter.apiKey) {
+    if (this.config.openrouter?.enabled && this.config.openrouter.apiKey) {
       this.providers.set('openrouter', axios.create({
         baseURL: 'https://openrouter.ai/api/v1',
         headers: {
-          'Authorization': `Bearer ${config.openrouter.apiKey}`,
+          'Authorization': `Bearer ${this.config.openrouter.apiKey}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': 'https://marketplace.visualstudio.com/ai-dev-suite',
           'X-Title': 'AI Dev Suite'
@@ -162,41 +162,41 @@ export class LLMRouter {
     }
 
     // Ollama
-    if (config.ollama?.enabled) {
+    if (this.config.ollama?.enabled) {
       this.providers.set('ollama', axios.create({
-        baseURL: config.ollama.endpoint || 'http://localhost:11434',
+        baseURL: this.config.ollama.endpoint || 'http://localhost:11434',
         headers: { 'Content-Type': 'application/json' }
       }));
     }
 
     // Agent Router
-    if (config['agent-router']?.enabled && config['agent-router'].apiKey) {
+    if (this.config['agent-router']?.enabled && this.config['agent-router'].apiKey) {
       this.providers.set('agent-router', axios.create({
-        baseURL: config['agent-router'].endpoint || 'https://api.agent-router.com/v1',
+        baseURL: this.config['agent-router'].endpoint || 'https://api.agent-router.com/v1',
         headers: {
-          'Authorization': `Bearer ${config['agent-router'].apiKey}`,
+          'Authorization': `Bearer ${this.config['agent-router'].apiKey}`,
           'Content-Type': 'application/json'
         }
       }));
     }
 
     // OpenAI
-    if (config.openai?.enabled && config.openai.apiKey) {
+    if (this.config.openai?.enabled && this.config.openai.apiKey) {
       this.providers.set('openai', axios.create({
         baseURL: 'https://api.openai.com/v1',
         headers: {
-          'Authorization': `Bearer ${config.openai.apiKey}`,
+          'Authorization': `Bearer ${this.config.openai.apiKey}`,
           'Content-Type': 'application/json'
         }
       }));
     }
 
     // Anthropic
-    if (config.anthropic?.enabled && config.anthropic.apiKey) {
+    if (this.config.anthropic?.enabled && this.config.anthropic.apiKey) {
       this.providers.set('anthropic', axios.create({
         baseURL: 'https://api.anthropic.com/v1',
         headers: {
-          'x-api-key': config.anthropic.apiKey,
+          'x-api-key': this.config.anthropic.apiKey,
           'anthropic-version': '2023-06-01',
           'Content-Type': 'application/json'
         }
@@ -204,7 +204,7 @@ export class LLMRouter {
     }
 
     // Google
-    if (config.google?.enabled && config.google.apiKey) {
+    if (this.config.google?.enabled && this.config.google.apiKey) {
       this.providers.set('google', axios.create({
         baseURL: 'https://generativelanguage.googleapis.com/v1beta',
         headers: { 'Content-Type': 'application/json' }
@@ -282,7 +282,7 @@ export class LLMRouter {
   }
 
   private async callProvider(
-    client: AxiosInstance,
+    client: any,
     provider: LLMProvider,
     messages: any[],
     options: any

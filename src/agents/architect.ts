@@ -260,4 +260,36 @@ export class ArchitectAgent {
   getCurrentProject(): any {
     return this.currentProject;
   }
+
+  async analyzeEnterpriseViability(idea: string): Promise<ViabilityAssessment> {
+    return this.analyzeViability(idea);
+  }
+
+  async generateProjectCharter(project: any): Promise<string> {
+    return '# Project Charter\n\n(pending)';
+  }
+
+  async generatePRD(project: any): Promise<string> {
+    return '# Product Requirements Document\n\n(pending)';
+  }
+
+  async generateSystemDesign(project: any): Promise<ArchitectureDesign> {
+    return this.parseArchitectureResponse('');
+  }
+
+  async generateRevenueModel(project: any): Promise<string> {
+    return '# Revenue Model\n\n(pending)';
+  }
+
+  async generateInitialADRs(project: any): Promise<string> {
+    return '# ADRs\n\n(pending)';
+  }
+
+  async runSecurityAudit(project: any): Promise<string> {
+    return '# Security Audit\n\n(pending)';
+  }
+
+  async runPerformanceAudit(project: any): Promise<string> {
+    return '# Performance Audit\n\n(pending)';
+  }
 }
